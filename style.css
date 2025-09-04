@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+h1 {
+    color: #333;
+}
+
+.botao {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #0077cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.botao:hover {
+    background: #005fa3;
+}
+
+.certo {
+    color: green;
+    font-weight: bold;
+}
+
+.errado {
+    color: red;
+    font-weight: bold;
+}
+
+form {
+    margin-top: 15px;
+    text-align: left;
+}
