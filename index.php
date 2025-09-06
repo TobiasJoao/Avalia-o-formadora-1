@@ -1,26 +1,8 @@
 <?php
 session_start();
+require "perguntas.php";
 
-// Array de perguntas, alternativas e resposta correta
-$perguntas = [
-    [
-        "pergunta" => "Qual é a capital da França?",
-        "alternativas" => ["Berlim", "Paris", "Londres"],
-        "correta" => 1
-    ],
-    [
-        "pergunta" => "Quanto é 5 + 7?",
-        "alternativas" => ["10", "12", "15"],
-        "correta" => 1
-    ],
-    [
-        "pergunta" => "Qual planeta é conhecido como Planeta Vermelho?",
-        "alternativas" => ["Marte", "Vênus", "Júpiter"],
-        "correta" => 0
-    ]
-];
-
-// Se não existir sessão, inicializa
+// Inicia sessão caso não exista
 if (!isset($_SESSION["pontos"])) {
     $_SESSION["pontos"] = 0;
     $_SESSION["atual"] = 0;
@@ -33,17 +15,19 @@ if (isset($_GET["reset"])) {
     exit();
 }
 
-// Verifica envio de resposta
+// Variável de feedback
 $feedback = "";
+
+// Verifica resposta enviada
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $resposta = $_POST["resposta"];
     $indice = $_SESSION["atual"];
 
     if ($resposta == $perguntas[$indice]["correta"]) {
         $_SESSION["pontos"]++;
-        $feedback = "<p class='certo'>✔ Resposta correta!</p>";
+        $feedback = "<p class='certo'>✔ Você acertou!</p>";
     } else {
-        $feedback = "<p class='errado'>✘ Resposta errada!</p>";
+        $feedback = "<p class='errado'>✘ Você errou!</p>";
     }
 
     $_SESSION["atual"]++;
@@ -52,8 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 $totalPerguntas = count($perguntas);
 $indice = $_SESSION["atual"];
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -63,7 +45,6 @@ $indice = $_SESSION["atual"];
 </head>
 <body>
 <div class="container">
-
     <h1>Mini Quiz Backend</h1>
 
     <?php if ($indice >= $totalPerguntas): ?>
@@ -73,7 +54,7 @@ $indice = $_SESSION["atual"];
         <a class="botao" href="index.php?reset=1">Reiniciar Quiz</a>
 
     <?php else: ?>
-        <!-- Pergunta Atual -->
+        <!-- Tela de Pergunta -->
         <h2>Pergunta <?= $indice + 1 ?> de <?= $totalPerguntas ?></h2>
         <p><?= $perguntas[$indice]["pergunta"] ?></p>
 
@@ -90,7 +71,6 @@ $indice = $_SESSION["atual"];
         <!-- Feedback -->
         <?= $feedback ?>
     <?php endif; ?>
-
 </div>
 </body>
 </html>
